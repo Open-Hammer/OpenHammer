@@ -1,10 +1,13 @@
 import ErrorHandler from "../middlewares/error.js";
 import { v2 as cloudinary } from "cloudinary";
 import User from "../models/uesSchema.js";
-export const register = async (req, res, next) => {
+import { catchAsyncErrors } from "../middlewares/catchAsyncErrors.js";
+import { generateToken } from "../utils/jwtToken.js";
+export const register = catchAsyncErrors(async (req, res, next) => {
   if (!req.files || Object.keys(req.files).length === 0) {
     return next(new ErrorHandler("Profile Image Required", 400));
   }
+  // console.log(req.body);
 
   const { profileImage } = req.files;
   const allowedFormats = ["image/png", "image/jpg", "image/webp"];
@@ -47,12 +50,13 @@ export const register = async (req, res, next) => {
     return next(new ErrorHandler("User already registered", 400));
   }
   const cloudinaryResponse = await cloudinary.uploader.upload(
-    profileImage.tempfilePath,
+    req.files.profileImage.tempFilePath,
     {
       folder: "OpenHammer_users",
     }
   );
   if (!cloudinaryResponse || cloudinary.error) {
+    console.log("sfdfdsf ");
     console.error(
       "Cloudinary error:",
       cloudinaryResponse.error || "Unknown cloudinary error"
@@ -86,8 +90,5 @@ export const register = async (req, res, next) => {
       },
     },
   });
-  res.status(201).json({
-    success: true,
-    message: "User Registered",
-  });
-};
+  generateToken(user, "User Registered", 201, res);
+});
