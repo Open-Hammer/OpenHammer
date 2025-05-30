@@ -3,6 +3,7 @@ import { v2 as cloudinary } from "cloudinary";
 import User from "../models/uesSchema.js";
 import { catchAsyncErrors } from "../middlewares/catchAsyncErrors.js";
 import { generateToken } from "../utils/jwtToken.js";
+
 export const register = catchAsyncErrors(async (req, res, next) => {
   if (!req.files || Object.keys(req.files).length === 0) {
     return next(new ErrorHandler("Profile Image Required", 400));
@@ -92,3 +93,25 @@ export const register = catchAsyncErrors(async (req, res, next) => {
   });
   generateToken(user, "User Registered", 201, res);
 });
+export const login = catchAsyncErrors(async (req, res, next) => {
+  console.log(req.body);
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return next(new ErrorHandler("Please fill full form"));
+  }
+  // i have used select because in the models in password field it is mentioned as selected:false;
+  const user = await User.findOne({ email }).select("+password");
+  if (!user) {
+    return next(new ErrorHandler("Invalid Credentials", 400));
+  }
+  const isPasswordMatched = await user.comparePassword(password);
+  if (!isPasswordMatched) {
+    return next(new ErrorHandler("Invalid Credentials", 400));
+  }
+  // if the credentials is matched we will generate a token for the user
+  generateToken(user, "Login Successfully.", 200, res);
+});
+export const getProfile = catchAsyncErrors(async (req, res, next) => {});
+export const logout = catchAsyncErrors(async (req, res, next) => {});
+export const fetchLeaderboard = catchAsyncErrors(async (req, res, next) => {});
