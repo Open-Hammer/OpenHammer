@@ -1,6 +1,6 @@
 import ErrorHandler from "../middlewares/error.js";
 import { v2 as cloudinary } from "cloudinary";
-import User from "../models/uesSchema.js";
+import User from "../models/userSchema.js";
 import { catchAsyncErrors } from "../middlewares/catchAsyncErrors.js";
 import { generateToken } from "../utils/jwtToken.js";
 
@@ -112,6 +112,32 @@ export const login = catchAsyncErrors(async (req, res, next) => {
   // if the credentials is matched we will generate a token for the user
   generateToken(user, "Login Successfully.", 200, res);
 });
-export const getProfile = catchAsyncErrors(async (req, res, next) => {});
-export const logout = catchAsyncErrors(async (req, res, next) => {});
-export const fetchLeaderboard = catchAsyncErrors(async (req, res, next) => {});
+export const getProfile = catchAsyncErrors(async (req, res, next) => {
+  // before this function isauthenticated function is running which is setting req.user;
+  const user = req.user;
+  res.status(200).json({
+    success: true,
+    user,
+  });
+});
+export const logout = catchAsyncErrors(async (req, res, next) => {
+  res
+    .status(200)
+    .cookie("token", "", {
+      expires: new Date(Date.now()),
+      httpOnly: true,
+    })
+    .json({
+      success: true,
+      message: "Logout Successfully.",
+    });
+});
+export const fetchLeaderboard = catchAsyncErrors(async (req, res, next) => {
+  const users = await User.find({ moneySpent: { $gt: 0 } });
+  // sorting the users using custom comparator showing most spend users earlier
+  const leaderboard = users.sort((a, b) => b.moneySpent - a.moneySpent);
+  res.status(200).json({
+    success: true,
+    leaderboard,
+  });
+});
