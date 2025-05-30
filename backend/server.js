@@ -8,6 +8,7 @@ import fileUpload from "express-fileupload";
 import { connection } from "./database/connection.js";
 import { errorMiddleware } from "./middlewares/error.js";
 import userRouter from "./router/userRoutes.js";
+import auctionItemRouter from "./router/auctionItemRoutes.js";
 config({
   path: "./config/config.env",
 });
@@ -40,6 +41,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/v1/user", userRouter);
+app.use("/api/v1/auctionitem", auctionItemRouter);
 
 connection();
 app.use(errorMiddleware);
