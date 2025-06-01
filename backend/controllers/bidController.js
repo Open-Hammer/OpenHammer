@@ -42,6 +42,7 @@ export const placeBid = catchAsyncErrors(async (req, res, next) => {
       auctionItem.currentBid = amount;
     } else {
       // if the user is a new bidder has placed his first bid
+
       const bidderDetail = await User.findById(req.user._id);
       const bid = await Bid.create({
         amount,
@@ -58,14 +59,15 @@ export const placeBid = catchAsyncErrors(async (req, res, next) => {
         profileImage: bidderDetail.profileImage?.url,
         amount,
       });
-      await auctionItem.save();
-
-      res.status(201).json({
-        success: true,
-        message: "Bid placed.",
-        currentBid: auctionItem.currentBid,
-      });
+      auctionItem.currentBid = amount;
     }
+    await auctionItem.save();
+
+    res.status(201).json({
+      success: true,
+      message: "Bid placed.",
+      currentBid: auctionItem.currentBid,
+    });
   } catch (error) {
     return next(new ErrorHandler(error.message || "Failed to place bid ", 500));
   }
