@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const auctionSchema = new mongoose.Schema({
   title: String,
   description: String,
-  startingbid: Number,
+  startingBid: Number,
   category: String,
   condition: {
     type: String,
