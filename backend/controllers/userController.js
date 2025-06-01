@@ -56,7 +56,7 @@ export const register = catchAsyncErrors(async (req, res, next) => {
       folder: "OpenHammer_users",
     }
   );
-  if (!cloudinaryResponse || cloudinary.error) {
+  if (!cloudinaryResponse || cloudinaryResponse.error) {
     console.log("sfdfdsf ");
     console.error(
       "Cloudinary error:",
