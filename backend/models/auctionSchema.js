@@ -11,7 +11,7 @@ const auctionSchema = new mongoose.Schema({
   },
   currentBid: { type: Number, default: 0 },
   startTime: String,
-  endtime: String,
+  endTime: String,
   image: {
     public_id: {
       type: String,
