@@ -11,6 +11,36 @@ const userSlice = createSlice({
     leaderboard: [],
   },
   reducers: {
+    registerRequest(state, action) {
+      state.loading = true;
+      state.isAuthenticated = true;
+      state.user = {};
+    },
+    registerSuccess(state, action) {
+      state.loading = false;
+      state.isAuthenticated = true;
+      state.user = action.payload.user;
+    },
+    registerFailed(state, action) {
+      state.loading = false;
+      state.isAuthenticated = false;
+      state.user = {};
+    },
+    loginRequest(state, action) {
+      state.loading = true;
+      state.isAuthenticated = true;
+      state.user = {};
+    },
+    loginSuccess(state, action) {
+      state.loading = false;
+      state.isAuthenticated = true;
+      state.user = action.payload.user;
+    },
+    loginFailed(state, action) {
+      state.loading = false;
+      state.isAuthenticated = false;
+      state.user = {};
+    },
     logoutSuccess(state, action) {
       state.isAuthenticated = false;
       state.user = {};
@@ -28,7 +58,47 @@ const userSlice = createSlice({
     },
   },
 });
+export const register = (data) => async (dispatch) => {
+  dispatch(userSlice.actions.registerRequest());
+  try {
+    const response = await axios.post(
+      "http://localhost:5000/api/v1/user/register",
+      data,
+      {
+        withCredentials: true,
+        headers: { "Content-Type": "multipart/form-data" },
+      }
+    );
+    dispatch(userSlice.actions.registerSuccess(response.data));
+    toast.success(response.data.message);
+    dispatch(userSlice.actions.clearAllErrors());
+  } catch (error) {
+    dispatch(userSlice.actions.registerFailed());
+    toast.error(error.response.data.message);
+    dispatch(userSlice.actions.clearAllErrors());
+  }
+};
 
+export const login = (data) => async (dispatch) => {
+  dispatch(userSlice.actions.loginRequest());
+  try {
+    const response = await axios.post(
+      "http://localhost:5000/api/v1/user/login",
+      data,
+      {
+        withCredentials: true,
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+    dispatch(userSlice.actions.loginSuccess(response.data));
+    toast.success(response.data.message);
+    dispatch(userSlice.actions.clearAllErrors());
+  } catch (error) {
+    dispatch(userSlice.actions.loginFailed());
+    toast.error(error.response.data.message);
+    dispatch(userSlice.actions.clearAllErrors());
+  }
+};
 export const logout = () => async (dispatch) => {
   try {
     const response = await axios.get(
