@@ -9,7 +9,14 @@ import Login from "./pages/Login.jsx";
 import SubmitCommission from "./pages/SubmitCommission.jsx";
 import { useDispatch } from "react-redux";
 import Footer from "./layout/Footer.jsx";
+import { fetchUser } from "./store/slices/userSlice.js";
+import AboutUs from "./pages/About.jsx";
+import Contact from "./pages/Contact.jsx";
 const App = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchUser());
+  }, []);
   return (
     <Router>
       <Navbar />
@@ -18,9 +25,11 @@ const App = () => {
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
         <Route path="/submit-commission" element={<SubmitCommission />} />
+        <Route path="/about" element={<AboutUs />} />
+        <Route path="/contact" element={<Contact />} />
       </Routes>
       <ToastContainer position="top-right" />
-      <Footer/>
+      <Footer />
     </Router>
   );
 };

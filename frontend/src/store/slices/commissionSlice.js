@@ -28,7 +28,7 @@ export const postCommissionProof = (data) => async (dispatch) => {
       data,
       {
         withCredentials: true,
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "multipart/form-data" },
       }
     );
     dispatch(commissionSlice.actions.postCommissionProofSuccess());

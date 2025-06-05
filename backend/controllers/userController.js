@@ -11,7 +11,7 @@ export const register = catchAsyncErrors(async (req, res, next) => {
   // console.log(req.body);
 
   const { profileImage } = req.files;
-  const allowedFormats = ["image/png", "image/jpg", "image/webp"];
+  const allowedFormats = ["image/png", "image/jpg", "image/webp", "image/jpeg"];
   if (!allowedFormats.includes(profileImage.mimetype)) {
     return next(new ErrorHandler("File format not supported", 400));
   }
@@ -62,6 +62,7 @@ export const register = catchAsyncErrors(async (req, res, next) => {
       "Cloudinary error:",
       cloudinaryResponse.error || "Unknown cloudinary error"
     );
+    s;
     return next(
       new ErrorHandler("Failed to upload profile image to cloudinary", 400)
     );

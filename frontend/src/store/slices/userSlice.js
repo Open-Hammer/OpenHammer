@@ -13,7 +13,7 @@ const userSlice = createSlice({
   reducers: {
     registerRequest(state, action) {
       state.loading = true;
-      state.isAuthenticated = true;
+      state.isAuthenticated = false;
       state.user = {};
     },
     registerSuccess(state, action) {
@@ -28,7 +28,7 @@ const userSlice = createSlice({
     },
     loginRequest(state, action) {
       state.loading = true;
-      state.isAuthenticated = true;
+      state.isAuthenticated = false;
       state.user = {};
     },
     loginSuccess(state, action) {
@@ -138,7 +138,7 @@ export const fetchUser = () => async (dispatch) => {
     });
     dispatch(userSlice.actions.fetchUserSuccess(response.data.user));
     dispatch(userSlice.actions.clearAllErrors());
-  } catch (error) {
+  } catch (error){
     dispatch(userSlice.actions.fetchUserFailed());
     dispatch(userSlice.actions.clearAllErrors());
     console.error(error);
