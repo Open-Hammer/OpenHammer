@@ -16,12 +16,14 @@ const SignUp = () => {
   const [paypalEmail, setPaypalEmail] = useState("");
   const [profileImage, setProfileImage] = useState("");
   const [profileImagePreview, setProfileImagePreview] = useState("");
+  const [upiId, setUpiId] = useState("");
+  const [razorpayAccountNumber, setRazorpayAccountNumber] = useState("");
 
   const { loading, isAuthenticated } = useSelector((state) => state.user);
   const navigateTo = useNavigate();
   const dispatch = useDispatch();
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append("userName", userName);
@@ -36,8 +38,13 @@ const SignUp = () => {
       formData.append("bankAccountNumber", bankAccountNumber);
       formData.append("bankName", bankName);
       formData.append("paypalEmail", paypalEmail);
+      formData.append("upiId", upiId);
+      formData.append("razorpayAccountNumber", razorpayAccountNumber);
     }
-    dispatch(register(formData));
+    const res = await dispatch(register(formData));
+    if(res.payload?.success) {
+      navigateTo("/login");
+    }
   };
 
   useEffect(() => {
@@ -57,76 +64,76 @@ const SignUp = () => {
   };
 
   return (
-    <section className="w-full px-6 pt-24 lg:pl-[100px] min-h-screen bg-gray-50">
-      <div className="bg-white max-w-4xl mx-auto p-6 rounded-2xl shadow-md space-y-6">
-        <h1 className="text-[#d6482b] text-4xl md:text-5xl font-extrabold text-center">
+    <section className="w-full px-4 sm:px-6 pt-24 lg:pl-[100px] min-h-screen bg-gray-50">
+      <div className="bg-white max-w-4xl mx-auto p-6 sm:p-8 rounded-2xl shadow-lg space-y-6">
+        <h1 className="text-[#059f15] text-3xl sm:text-5xl font-extrabold text-center">
           Sign Up
         </h1>
 
         <form onSubmit={handleRegister} className="w-full space-y-6">
-          <p className="text-2xl font-semibold text-gray-700 border-b pb-1">
+          <p className="text-xl sm:text-2xl font-semibold text-gray-700 border-b pb-1">
             Personal Details
           </p>
 
           <div className="flex flex-col gap-4 sm:flex-row">
             <div className="flex flex-col sm:flex-1">
-              <label className="text-base text-gray-600 font-medium">
+              <label className="text-sm sm:text-base text-gray-600 font-medium">
                 Full Name
               </label>
               <input
                 type="text"
                 value={userName}
                 onChange={(e) => setUserName(e.target.value)}
-                className="text-base py-2 bg-transparent border-b border-gray-400 focus:outline-none"
+                className="text-base py-2 px-1 bg-white border-b-2 border-gray-300 focus:outline-none focus:border-[#d6482b] transition-all"
               />
             </div>
             <div className="flex flex-col sm:flex-1">
-              <label className="text-base text-gray-600 font-medium">
+              <label className="text-sm sm:text-base text-gray-600 font-medium">
                 Email
               </label>
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="text-base py-2 bg-transparent border-b border-gray-400 focus:outline-none"
+                className="text-base py-2 px-1 bg-white border-b-2 border-gray-300 focus:outline-none focus:border-[#d6482b] transition-all"
               />
             </div>
           </div>
 
           <div className="flex flex-col gap-4 sm:flex-row">
             <div className="flex flex-col sm:flex-1">
-              <label className="text-base text-gray-600 font-medium">
+              <label className="text-sm sm:text-base text-gray-600 font-medium">
                 Phone
               </label>
               <input
                 type="text"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                className="text-base py-2 bg-transparent border-b border-gray-400 focus:outline-none"
+                className="text-base py-2 px-1 bg-white border-b-2 border-gray-300 focus:outline-none focus:border-[#d6482b] transition-all"
               />
             </div>
             <div className="flex flex-col sm:flex-1">
-              <label className="text-base text-gray-600 font-medium">
+              <label className="text-sm sm:text-base text-gray-600 font-medium">
                 Address
               </label>
               <input
                 type="text"
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
-                className="text-base py-2 bg-transparent border-b border-gray-400 focus:outline-none"
+                className="text-base py-2 px-1 bg-white border-b-2 border-gray-300 focus:outline-none focus:border-[#d6482b] transition-all"
               />
             </div>
           </div>
 
           <div className="flex flex-col gap-4 sm:flex-row">
             <div className="flex flex-col sm:flex-1">
-              <label className="text-base text-gray-600 font-medium">
+              <label className="text-sm sm:text-base text-gray-600 font-medium">
                 Role
               </label>
               <select
                 value={role}
                 onChange={(e) => setRole(e.target.value)}
-                className="text-base py-2 bg-transparent border-b border-gray-400 focus:outline-none"
+                className="text-base py-2 px-1 bg-white border-b-2 border-gray-300 focus:outline-none focus:border-[#d6482b] transition-all"
               >
                 <option value="">Select Role</option>
                 <option value="Auctioneer">Auctioneer</option>
@@ -134,25 +141,28 @@ const SignUp = () => {
               </select>
             </div>
             <div className="flex flex-col sm:flex-1">
-              <label className="text-base text-gray-600 font-medium">
+              <label className="text-sm sm:text-base text-gray-600 font-medium">
                 Password
               </label>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="text-base py-2 bg-transparent border-b border-gray-400 focus:outline-none"
+                className="text-base py-2 px-1 bg-white border-b-2 border-gray-300 focus:outline-none focus:border-[#d6482b] transition-all"
               />
             </div>
           </div>
 
           <div className="flex flex-col gap-2">
-            <label className="text-base text-gray-600 font-medium">
+            <label className="text-sm sm:text-base text-gray-600 font-medium">
               Profile Image
             </label>
             <div className="flex items-center gap-4 mt-2">
               <img
-                src={profileImagePreview || "/imageHolder.jpg"}
+                src={
+                  profileImagePreview ||
+                  "https://cdn-icons-png.flaticon.com/512/1053/1053244.png"
+                }
                 alt="profileImagePreview"
                 className="w-16 h-16 rounded-full border object-cover"
               />
@@ -161,7 +171,7 @@ const SignUp = () => {
           </div>
 
           <div className="flex flex-col gap-4">
-            <p className="text-2xl font-semibold text-gray-700 border-b pb-1">
+            <p className="text-xl sm:text-2xl font-semibold text-gray-700 border-b pb-1">
               Payment Method Details
               <span className="text-sm text-gray-500 font-normal block">
                 Fill Payments Details if you are Auctioneer
@@ -169,14 +179,14 @@ const SignUp = () => {
             </p>
 
             <div className="flex flex-col gap-2">
-              <label className="text-base text-gray-600 font-medium">
+              <label className="text-sm sm:text-base text-gray-600 font-medium">
                 Bank Details
               </label>
               <div className="flex flex-col gap-3 sm:flex-row">
                 <select
                   value={bankName}
                   onChange={(e) => setBankName(e.target.value)}
-                  className="text-base py-2 bg-transparent border-b border-gray-400 focus:outline-none sm:flex-1"
+                  className="text-base py-2 px-1 bg-white border-b-2 border-gray-300 focus:outline-none focus:border-[#d6482b] transition-all sm:flex-1"
                   disabled={role === "Bidder"}
                 >
                   <option value="">Select Your Bank</option>
@@ -186,7 +196,7 @@ const SignUp = () => {
                   <option value="PNB">Punjab National Bank(PNB)</option>
                 </select>
                 <input
-                  className="text-base py-2 bg-transparent border-b border-gray-400 focus:outline-none sm:flex-1"
+                  className="text-base py-2 px-1 bg-white border-b-2 border-gray-300 focus:outline-none focus:border-[#d6482b] transition-all sm:flex-1"
                   type="text"
                   value={bankAccountName}
                   placeholder="Bank Account Name"
@@ -194,7 +204,7 @@ const SignUp = () => {
                   disabled={role === "Bidder"}
                 />
                 <input
-                  className="text-base py-2 bg-transparent border-b border-gray-400 focus:outline-none sm:flex-1"
+                  className="text-base py-2 px-1 bg-white border-b-2 border-gray-300 focus:outline-none focus:border-[#d6482b] transition-all sm:flex-1"
                   type="text"
                   value={bankAccountNumber}
                   placeholder="Bank Account Number"
@@ -205,7 +215,7 @@ const SignUp = () => {
             </div>
 
             <div>
-              <label className="text-base text-gray-600 font-medium">
+              <label className="text-sm sm:text-base text-gray-600 font-medium">
                 Paypal Details
               </label>
               <div className="flex flex-col gap-1 sm:flex-row sm:gap-4">
@@ -214,7 +224,37 @@ const SignUp = () => {
                   value={paypalEmail}
                   placeholder="paypal@gmail.com"
                   onChange={(e) => setPaypalEmail(e.target.value)}
-                  className="text-base py-2 bg-transparent border-b border-gray-400 focus:outline-none sm:flex-1"
+                  className="text-base py-2 px-1 bg-white border-b-2 border-gray-300 focus:outline-none focus:border-[#d6482b] transition-all sm:flex-1"
+                  disabled={role === "Bidder"}
+                />
+              </div>
+            </div>
+            <div>
+              <label className="text-sm sm:text-base text-gray-600 font-medium">
+                Razorpay Details
+              </label>
+              <div className="flex flex-col gap-1 sm:flex-row sm:gap-4">
+                <input
+                  type="text"
+                  value={razorpayAccountNumber}
+                  placeholder="Razorpay account number"
+                  onChange={(e) => setRazorpayAccountNumber(e.target.value)}
+                  className="text-base py-2 px-1 bg-white border-b-2 border-gray-300 focus:outline-none focus:border-[#d6482b] transition-all sm:flex-1"
+                  disabled={role === "Bidder"}
+                />
+              </div>
+            </div>
+            <div>
+              <label className="text-sm sm:text-base text-gray-600 font-medium">
+                UPI Details
+              </label>
+              <div className="flex flex-col gap-1 sm:flex-row sm:gap-4">
+                <input
+                  type="text"
+                  value={upiId}
+                  placeholder="UPI ID"
+                  onChange={(e) => setUpiId(e.target.value)}
+                  className="text-base py-2 px-1 bg-white border-b-2 border-gray-300 focus:outline-none focus:border-[#d6482b] transition-all sm:flex-1"
                   disabled={role === "Bidder"}
                 />
               </div>
@@ -222,7 +262,7 @@ const SignUp = () => {
           </div>
 
           <button
-            className="bg-[#d6482b] hover:bg-[#b8381e] transition-all duration-300 text-white text-lg font-semibold py-3 px-6 rounded-lg w-full max-w-md mx-auto flex  justify-center"
+            className="bg-[hsl(138,94%,25%)] hover:bg-[#41bb18] transition-all duration-300 text-white text-lg font-semibold py-3 px-6 rounded-lg w-full max-w-md mx-auto flex justify-center"
             type="submit"
             disabled={loading}
           >
@@ -233,5 +273,4 @@ const SignUp = () => {
     </section>
   );
 };
-
 export default SignUp;

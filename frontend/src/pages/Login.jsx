@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
+import { login } from "@/store/slices/userSlice.js";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -9,50 +9,63 @@ const Login = () => {
   const { loading, isAuthenticated } = useSelector((state) => state.user);
   const naviagteTo = useNavigate();
   const dispatch = useDispatch();
-  const handleLogin = (e) => {
+
+  const handleLogin = async (e) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append("email", email);
     formData.append("password", password);
-    dispatch(Login(formData));
+    const res = await dispatch(login(formData));
+    // only render new page if login is successful
+    if (res.payload?.success) {
+      naviagteTo("/");
+    }
   };
+
   useEffect(() => {
     if (isAuthenticated) {
       naviagteTo("/");
     }
-  }, [dispatch, isAuthenticated, loading]);
+  }, [dispatch, loading, isAuthenticated]);
+
   return (
     <>
-      <section className="w-full px-6 pt-24 lg:pl-[100px] min-h-screen bg-gray-50">
-        <div className="bg-white max-w-4xl mx-auto p-6 rounded-2xl shadow-md space-y-6 sm:w-[600px] sm:h-[450px]">
-          <h1 className="text-[#d6482b] text-4xl md:text-5xl font-extrabold text-center">
+      <section className="w-full min-h-screen flex items-center justify-center bg-gray-100 px-6 py-12">
+        <div className="bg-white w-full max-w-2xl p-10 rounded-2xl shadow-2xl space-y-8">
+          <h1 className="text-[#0b4ff0] text-5xl font-extrabold text-center">
             Login
           </h1>
-          <form className="flex flex-col gap-5 w-full">
+          <form className="flex flex-col gap-8 w-full" onSubmit={handleLogin}>
             <div className="flex flex-col gap-2">
-              <label className="text-[16px] text-stone-500">Email</label>
+              <label className="text-lg text-gray-700 font-semibold">
+                Email
+              </label>
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="text-base py-2 bg-transparent border-b border-gray-400 focus:outline-none"
+                className="text-lg py-3 px-4 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#d6482b] shadow-sm"
+                required
               />
             </div>
             <div className="flex flex-col gap-2">
-              <label className="text-[16px] text-stone-500">Password</label>
+              <label className="text-lg text-gray-700 font-semibold">
+                Password
+              </label>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="text-base py-2 bg-transparent border-b border-gray-400 focus:outline-none"
+                className="text-lg py-3 px-4 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#d6482b] shadow-sm"
+                required
               />
             </div>
             <button
-              className="bg-blue-600 hover:bg-blue-800 transition-all duration-300 text-white text-lg font-semibold py-3 px-6 rounded-lg w-full max-w-md mx-auto flex  justify-center"
+              className="bg-[#0754b1] hover:bg-[#0c81f6] transition-all duration-300 text-white text-xl font-semibold py-3 rounded-xl shadow-lg"
               type="submit"
               disabled={loading}
             >
-              {loading ? "Logging..." : "Login"}
+              {loading ? "Logging in..." : "Login"}
             </button>
           </form>
         </div>
