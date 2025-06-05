@@ -14,7 +14,7 @@ import { FaFacebook, FaEye } from "react-icons/fa";
 import { IoIosCreate } from "react-icons/io";
 import { FaFileInvoiceDollar } from "react-icons/fa6";
 import { IoMdContact } from "react-icons/io";
-
+import { FaHammer } from "react-icons/fa";
 const Navbar = () => {
   const dispatch = useDispatch();
   const { isAuthenticated, user } = useSelector((state) => state.user);
@@ -26,9 +26,18 @@ const Navbar = () => {
   return (
     <nav className="w-full fixed top-0 left-0 z-50 bg-white shadow-md border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-        <Link to="/" className="text-2xl font-bold text-gray-800">
-          Open<span className="text-blue-600">Hammer</span>
+        <Link to={"/"}>
+          <div className="flex items-center gap-2 mb-3 flex-wrap sm:flex-nowrap">
+            <FaHammer className="text-2xl sm:text-3xl text-yellow-500" />
+            <h1 className="text-xl sm:text-2xl font-bold text-blue-500">
+              Open
+              <span className="text-xl sm:text-3xl text-orange-600">
+                Hammer
+              </span>
+            </h1>
+          </div>
         </Link>
+
         <div
           className="md:hidden text-2xl text-gray-700"
           onClick={() => setMenuOpen(!menuOpen)}

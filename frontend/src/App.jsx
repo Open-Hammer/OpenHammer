@@ -8,6 +8,7 @@ import SignUp from "./pages/SignUp.jsx";
 import Login from "./pages/Login.jsx";
 import SubmitCommission from "./pages/SubmitCommission.jsx";
 import { useDispatch } from "react-redux";
+import Footer from "./layout/Footer.jsx";
 const App = () => {
   return (
     <Router>
@@ -19,6 +20,7 @@ const App = () => {
         <Route path="/submit-commission" element={<SubmitCommission />} />
       </Routes>
       <ToastContainer position="top-right" />
+      <Footer/>
     </Router>
   );
 };
