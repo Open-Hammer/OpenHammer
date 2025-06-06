@@ -1,5 +1,4 @@
 import FeatureAuctions from "@/layout/FeatureAuctions";
-import Leaderboard from "@/layout/Leaderboard";
 import Spinner from "@/layout/Spinner";
 import UpcomingAuctions from "@/layout/UpcomingAuctions";
 import React from "react";
@@ -52,18 +51,18 @@ const Home = () => {
           Become the <span className="text-orange-400">Ultimate</span> Auction
           Champion
         </h2>
-        <div className="space-x-6">
+        <div className="space-x-6 flex justify-center flex-wrap gap-3">
           {!isAuthenticated && (
             <>
               <Link
                 to="/sign-up"
-                className="inline-block bg-white text-blue-600 font-semibold px-8 py-3 rounded-lg shadow hover:bg-gray-100 transition"
+                className="inline-block bg-white text-blue-600 font-semibold px-6 py-3 rounded-lg shadow hover:bg-gray-100 transition"
               >
                 Sign Up
               </Link>
               <Link
                 to="/login"
-                className="inline-block border border-white text-white font-semibold px-8 py-3 rounded-lg hover:bg-white hover:text-blue-600 transition"
+                className="inline-block border border-white text-white font-semibold px-6 py-3  rounded-lg hover:bg-white hover:text-blue-600 transition"
               >
                 Login
               </Link>
@@ -91,7 +90,6 @@ const Home = () => {
       </div>
       <FeatureAuctions />
       <UpcomingAuctions />
-      <Leaderboard />
     </section>
   );
 };

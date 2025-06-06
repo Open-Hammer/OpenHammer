@@ -1,26 +1,16 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import Card from "./Card";
+import Card from "@/layout/Card";
+import Spinner from "@/layout/Spinner";
 
-const FeatureAuctions = () => {
+const Auctions = () => {
   const { allAuctions, loading } = useSelector((state) => state.auction);
 
   if (loading) {
-    return (
-      <p className="text-center py-12 text-gray-500 text-lg font-medium">
-        Loading auctions...
-      </p>
-    );
+    return <Spinner />;
   }
 
-  // if (!Array.isArray(allAuctions) || allAuctions.length === 0) {
-  //   return (
-  //     <p className="text-center py-12 text-gray-400 italic text-lg">
-  //       No featured auctions available at the moment.
-  //     </p>
-  //   );
-  // }
-
+  // Temporary array for demonstration
   const arrayforitem = [
     {
       _id: "1",
@@ -105,12 +95,12 @@ const FeatureAuctions = () => {
   ];
 
   return (
-    <section className="max-w-7xl mx-auto px-6 py-10">
+    <section className="max-w-7xl mx-auto px-6 py-10 mt-16">
       <h3 className="text-4xl font-extrabold text-gray-900 mb-10 text-center tracking-tight">
-        Featured Auctions
+        All Auctions
       </h3>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-        {arrayforitem.slice(0, 8).map((item) => (
+        {arrayforitem.map((item) => (
           <Card
             key={item._id}
             title={item.title}
@@ -126,4 +116,4 @@ const FeatureAuctions = () => {
   );
 };
 
-export default FeatureAuctions;
+export default Auctions;

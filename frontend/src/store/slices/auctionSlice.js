@@ -23,6 +23,19 @@ const auctionSlice = createSlice({
     getAllAuctionItemFailed(state, action) {
       state.loading = false;
     },
+    getAuctionDetailRequest(state, action) {
+      state.loading = true;
+    },
+    getAuctionDetailSuccess(state, action) {
+      state.loading = false;
+      state.auctionDetail = action.payload.auctionItem;
+      state.auctionBidders = action.payload.bidders;
+    },
+    getAuctionDetailFailed(state, action) {
+      state.loading = false;
+      state.auctionDetail = state.auctionDetail;
+      state.auctionBidders = state.auctionBidders;
+    },
     resetSlice(state, action) {
       state.loading = false;
       state.auctionDetail = state.auctionDetail;
@@ -32,15 +45,12 @@ const auctionSlice = createSlice({
     },
   },
 });
-
 export const getAllAuctionItems = () => async (dispatch) => {
   dispatch(auctionSlice.actions.getAllAuctionItemRequest());
   try {
     const response = await axios.get(
       "http://localhost:5000/api/v1/auctionitem/allitems",
-      {
-        withCredentials: true,
-      }
+      { withCredentials: true }
     );
     dispatch(
       auctionSlice.actions.getAllAuctionItemSuccess(response.data.items)
@@ -48,9 +58,8 @@ export const getAllAuctionItems = () => async (dispatch) => {
     dispatch(auctionSlice.actions.resetSlice());
   } catch (error) {
     dispatch(auctionSlice.actions.getAllAuctionItemFailed());
-    console.log(error);
+    console.error(error);
     dispatch(auctionSlice.actions.resetSlice());
   }
 };
-
 export default auctionSlice.reducer;
