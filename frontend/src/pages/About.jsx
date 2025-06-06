@@ -11,6 +11,7 @@ import {
 import { Link } from "react-router-dom";
 
 const AboutUs = () => {
+  
   const features = [
     {
       icon: <FaGavel size={30} />,

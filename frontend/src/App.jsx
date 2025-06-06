@@ -12,10 +12,12 @@ import Footer from "./layout/Footer.jsx";
 import { fetchUser } from "./store/slices/userSlice.js";
 import AboutUs from "./pages/About.jsx";
 import Contact from "./pages/Contact.jsx";
+import { getAllAuctionItems } from "./store/slices/auctionSlice.js";
 const App = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchUser());
+    dispatch(getAllAuctionItems());
   }, []);
   return (
     <Router>
