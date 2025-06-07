@@ -17,6 +17,7 @@ export const calculateCommission = async (auctionId) => {
 };
 export const proofOfcommission = catchAsyncErrors(async (req, res, next) => {
   if (!req.files || Object.keys(req.files).length === 0) {
+    console.log(req.file);
     return next(new ErrorHandler("Payment Proof Screenshot required", 400));
   }
   const { proof } = req.files;
