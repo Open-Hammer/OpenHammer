@@ -13,7 +13,7 @@ export const addNewAuctionItem = catchAsyncErrors(async (req, res, next) => {
 
   const { image } = req.files;
 
-  const allowedFormats = ["image/png", "image/jpg", "image/webp"];
+  const allowedFormats = ["image/png", "image/webp", "image/jpeg"];
   if (!allowedFormats.includes(image.mimetype)) {
     return next(new ErrorHandler("File format not supported", 400));
   }
@@ -131,7 +131,7 @@ export const getAuctionDetails = catchAsyncErrors(async (req, res, next) => {
   if (!auctionItem) {
     return next(new ErrorHandler("Auction not found", 404));
   }
-  const bidders = auctionItem.bids.sort((a, b) => b.bid - a.bid);
+  const bidders = auctionItem.bids.sort((a, b) => b.amount - a.amount);
   res.status(200).json({
     success: true,
     auctionItem,
