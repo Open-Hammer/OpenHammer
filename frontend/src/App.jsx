@@ -7,7 +7,7 @@ import Home from "./pages/Home.jsx";
 import SignUp from "./pages/SignUp.jsx";
 import Login from "./pages/Login.jsx";
 import SubmitCommission from "./pages/SubmitCommission.jsx";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Footer from "./layout/Footer.jsx";
 import { fetchUser, fetchLeaderboard } from "./store/slices/userSlice.js";
 import AboutUs from "./pages/About.jsx";
@@ -15,8 +15,12 @@ import Contact from "./pages/Contact.jsx";
 import { getAllAuctionItems } from "./store/slices/auctionSlice.js";
 import Leaderboard from "./layout/Leaderboard.jsx";
 import Auctions from "./pages/Auctions.jsx";
+import AuctionItem from "./pages/AuctionItem.jsx";
+import CreateAuction from "./pages/CreateAuction.jsx";
 const App = () => {
   const dispatch = useDispatch();
+  // const { isAuthenticated } = useSelector((state) => state.user);
+  // console.log(isAuthenticated);
   useEffect(() => {
     dispatch(fetchUser());
     dispatch(getAllAuctionItems());
@@ -34,6 +38,8 @@ const App = () => {
         <Route path="/contact" element={<Contact />} />
         <Route path="/leaderboard" element={<Leaderboard />} />
         <Route path="/auctions" element={<Auctions />} />
+        <Route path="/auction/item/:id" element={<AuctionItem />} />
+        <Route path="/create-auction" element={<CreateAuction />} />
       </Routes>
       <ToastContainer position="top-right" />
       <Footer />

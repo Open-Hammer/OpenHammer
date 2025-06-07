@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { logout } from "@/store/slices/userSlice";
 import {
   RiAuctionFill,
   RiInstagramFill,
@@ -136,7 +137,7 @@ const Navbar = () => {
                 to="/sign-up"
                 className="text-green-500 border border-green-300 px-4 py-1 rounded hover:bg-green-50 text-sm font-medium"
               >
-                Sign Up 
+                Sign Up
               </Link>
               <Link
                 to="/Login"
