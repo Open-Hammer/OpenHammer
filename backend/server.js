@@ -1,6 +1,5 @@
 import { config } from "dotenv";
 import express from "express";
-
 import cloudinary from "cloudinary";
 import cors from "cors";
 import cookieParser from "cookie-parser";
