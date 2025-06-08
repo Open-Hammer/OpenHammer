@@ -16,6 +16,7 @@ import { IoIosCreate } from "react-icons/io";
 import { FaFileInvoiceDollar } from "react-icons/fa6";
 import { IoMdContact } from "react-icons/io";
 import { FaHammer } from "react-icons/fa";
+
 const Navbar = () => {
   const dispatch = useDispatch();
   const { isAuthenticated, user } = useSelector((state) => state.user);
@@ -28,11 +29,11 @@ const Navbar = () => {
     <nav className="w-full fixed top-0 left-0 z-50 bg-white shadow-md border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-4 py-2 flex items-center justify-between">
         <Link to={"/"}>
-          <div className="flex items-center  mb-3 flex-wrap sm:flex-nowrap">
-            <FaHammer className="text-2xl sm:text-3xl text-yellow-500" />
-            <h1 className="text-xl sm:text-2xl font-bold text-blue-500">
+          <div className="flex items-center mb-3 flex-wrap sm:flex-nowrap">
+            <FaHammer className="text-xl sm:text-2xl md:text-3xl text-yellow-500" />
+            <h1 className="text-lg sm:text-xl md:text-2xl font-bold text-blue-500">
               Open
-              <span className="text-xl sm:text-3xl text-orange-600">
+              <span className="text-lg sm:text-xl md:text-2xl text-orange-600">
                 Hammer
               </span>
             </h1>
@@ -40,13 +41,13 @@ const Navbar = () => {
         </Link>
 
         <div
-          className="md:hidden text-1xl text-gray-700"
+          className="lg:hidden text-xl text-gray-700"
           onClick={() => setMenuOpen(!menuOpen)}
         >
           {menuOpen ? <RiCloseLine /> : <RiMenu3Fill />}
         </div>
 
-        <ul className="hidden md:flex gap-6 items-center text-gray-700 font-semibold text-sm">
+        <ul className="hidden lg:flex gap-4 xl:gap-4 items-center text-gray-700 font-semibold text-xs sm:text-sm md:text-base">
           <li>
             <Link
               to="/auctions"
@@ -56,6 +57,17 @@ const Navbar = () => {
               Auctions
             </Link>
           </li>
+          {isAuthenticated && user.role !== "Super Admin" && (
+            <li>
+              <Link
+                to="/me"
+                className="flex items-center gap-1 hover:text-red-600"
+              >
+                <MdLeaderboard className="text-sm" />
+                My Profile
+              </Link>
+            </li>
+          )}
           <li>
             <Link
               to="/leaderboard"
@@ -65,7 +77,6 @@ const Navbar = () => {
               Leaderboard
             </Link>
           </li>
-
           {isAuthenticated && user?.role === "Auctioneer" && (
             <>
               <li>
@@ -97,7 +108,6 @@ const Navbar = () => {
               </li>
             </>
           )}
-
           {isAuthenticated && user?.role === "Super Admin" && (
             <li>
               <Link
@@ -109,7 +119,6 @@ const Navbar = () => {
               </Link>
             </li>
           )}
-
           <li>
             <Link
               to="/about"
@@ -130,18 +139,18 @@ const Navbar = () => {
           </li>
         </ul>
 
-        <div className="hidden md:flex items-center gap-4">
+        <div className="hidden lg:flex items-center gap-3">
           {!isAuthenticated ? (
             <>
               <Link
                 to="/sign-up"
-                className="text-green-500 border border-green-300 px-4 py-1 rounded hover:bg-green-50 text-sm font-medium"
+                className="text-green-500 border border-green-300 px-3 py-1 rounded hover:bg-green-50 text-xs sm:text-sm font-medium"
               >
                 Sign Up
               </Link>
               <Link
                 to="/Login"
-                className="text-blue-600 border border-blue-600 px-4 py-1 rounded hover:bg-blue-50 text-sm font-medium"
+                className="text-blue-600 border border-blue-600 px-3 py-1 rounded hover:bg-blue-50 text-xs sm:text-sm font-medium"
               >
                 Login
               </Link>
@@ -149,7 +158,7 @@ const Navbar = () => {
           ) : (
             <button
               onClick={handleLogout}
-              className="bg-red-500 text-white px-4 py-1 rounded text-sm font-medium hover:bg-red-600"
+              className="bg-red-500 text-white px-3 py-1 rounded text-xs sm:text-sm font-medium hover:bg-red-600"
             >
               Logout
             </button>
@@ -158,7 +167,7 @@ const Navbar = () => {
       </div>
 
       {menuOpen && (
-        <div className="md:hidden bg-white border-t border-gray-200 px-4 pb-4 pt-2 flex flex-col gap-4 text-sm font-medium text-gray-700">
+        <div className="lg:hidden bg-white border-t border-gray-200 px-4 pb-4 pt-2 flex flex-col gap-4 text-sm font-medium text-gray-700">
           <Link
             to="/auctions"
             onClick={() => setMenuOpen(false)}
@@ -173,7 +182,6 @@ const Navbar = () => {
           >
             <MdLeaderboard /> Leaderboard
           </Link>
-
           {isAuthenticated && user && user.role === "Auctioneer" && (
             <>
               <Link
@@ -199,7 +207,6 @@ const Navbar = () => {
               </Link>
             </>
           )}
-
           {isAuthenticated && user && user.role === "Super Admin" && (
             <Link
               to="/dashboard"
@@ -209,7 +216,6 @@ const Navbar = () => {
               <MdDashboard /> Dashboard
             </Link>
           )}
-
           <Link
             to="/about"
             onClick={() => setMenuOpen(false)}
@@ -224,7 +230,6 @@ const Navbar = () => {
           >
             <IoMdContact /> Contact
           </Link>
-
           {!isAuthenticated ? (
             <>
               <Link
@@ -237,7 +242,7 @@ const Navbar = () => {
               <Link
                 to="/Login"
                 onClick={() => setMenuOpen(false)}
-                className="text-blue-600  px-4 py-1 rounded hover:text-blue-800"
+                className="text-blue-600 px-4 py-1 rounded hover:text-blue-800"
               >
                 Login
               </Link>
