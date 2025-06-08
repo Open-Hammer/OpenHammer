@@ -42,7 +42,10 @@ const AboutUs = () => {
     <div className="bg-white text-gray-800">
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-blue-700 to-blue-500 text-white py-24 px-6 text-center">
-        <h1 className="text-5xl font-bold mb-4">Welcome to OpenHammer</h1>
+        <h1 className="text-5xl font-bold mb-4">
+          Welcome to <span className="text-black">Open</span>
+          <span className="text-orange-400">Hammer</span>
+        </h1>
         <p className="text-xl max-w-3xl mx-auto">
           A powerful, real-time auction platform built for creators, collectors,
           and competitive bidders. Join a thriving digital marketplace built on

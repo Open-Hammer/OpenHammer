@@ -57,10 +57,10 @@ const CreateAuction = () => {
     dispatch(createAuction(formData));
   };
 
-  const { isAuthenticated } = useSelector((state) => state.user);
+  const { isAuthenticated, user } = useSelector((state) => state.user);
   const navigateTo = useNavigate();
   useEffect(() => {
-    if (!isAuthenticated) {
+    if (!isAuthenticated || user.role !== "Auctioneer") {
       navigateTo("/");
     }
   }, [isAuthenticated]);
