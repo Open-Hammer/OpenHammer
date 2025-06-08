@@ -17,7 +17,6 @@ export const addNewAuctionItem = catchAsyncErrors(async (req, res, next) => {
   if (!allowedFormats.includes(image.mimetype)) {
     return next(new ErrorHandler("File format not supported", 400));
   }
-
   const {
     title,
     description,
