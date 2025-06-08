@@ -15,7 +15,7 @@ const ViewAuctionDetails = () => {
   );
   const { isAuthenticated, user } = useSelector((state) => state.user);
   useEffect(() => {
-    if (!isAuthenticated || user.role !== "Auctioneer") navigate("/");
+    if (!isAuthenticated || user.role === "Bidder") navigate("/");
      if(id) dispatch(getAuctionDetail(id));
   }, [isAuthenticated]);
   console.log(auctionBidders, typeof auctionBidders);
