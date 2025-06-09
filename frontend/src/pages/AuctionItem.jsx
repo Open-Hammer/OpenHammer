@@ -29,21 +29,6 @@ const AuctionItem = () => {
     dispatch(placeBid(id, formData));
     dispatch(getAuctionDetail(id));
   };
-  const biddersdds = [
-    {
-      userName: "Alice",
-      profileImage: "https://randomuser.me/api/portraits/women/44.jpg",
-    },
-    {
-      userName: "Bob",
-      profileImage: "https://randomuser.me/api/portraits/men/32.jpg",
-    },
-    {
-      userName: "Charlie",
-      profileImage: "https://randomuser.me/api/portraits/men/18.jpg",
-    },
-  ];
-
   const isAuctionLive =
     Date.now() >= new Date(auctionDetail.startTime) &&
     Date.now() <= new Date(auctionDetail.endTime);
@@ -143,7 +128,7 @@ const AuctionItem = () => {
                   />
                 ) : (
                   <img
-                    src="/auctionEnded.png"
+                    src={notStarted}
                     alt="Ended"
                     className="mx-auto w-40 opacity-80"
                   />

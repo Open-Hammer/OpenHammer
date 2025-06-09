@@ -12,7 +12,7 @@ const MyProfile = () => {
       navigateTo("/");
     }
   }, [isAuthenticated]);
-  console.log(user);
+  // console.log(user);
   return (
     <section className="p-4 sm:p-6 md:p-10 bg-gray-50 min-h-screen mt-12">
       {loading ? (

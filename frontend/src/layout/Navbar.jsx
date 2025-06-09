@@ -16,7 +16,7 @@ import { IoIosCreate } from "react-icons/io";
 import { FaFileInvoiceDollar } from "react-icons/fa6";
 import { IoMdContact } from "react-icons/io";
 import { FaHammer } from "react-icons/fa";
-
+import { FaUserCircle } from "react-icons/fa";
 const Navbar = () => {
   const dispatch = useDispatch();
   const { isAuthenticated, user } = useSelector((state) => state.user);
@@ -63,7 +63,7 @@ const Navbar = () => {
                 to="/me"
                 className="flex items-center gap-1 hover:text-red-600"
               >
-                <MdLeaderboard className="text-sm" />
+                <FaUserCircle className="text-sm" />
                 My Profile
               </Link>
             </li>
@@ -182,6 +182,16 @@ const Navbar = () => {
           >
             <MdLeaderboard /> Leaderboard
           </Link>
+          {isAuthenticated && user.role !== "Super Admin" && (
+            <Link
+              to="/me"
+              onClick={() => setMenuOpen(false)}
+              className="flex items-center gap-1 hover:text-red-600"
+            >
+              <FaUserCircle className="text-sm" />
+              My Profile
+            </Link>
+          )}
           {isAuthenticated && user && user.role === "Auctioneer" && (
             <>
               <Link
