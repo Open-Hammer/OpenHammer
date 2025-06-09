@@ -18,12 +18,12 @@ const ViewAuctionDetails = () => {
     if (!isAuthenticated || user.role === "Bidder") navigate("/");
      if(id) dispatch(getAuctionDetail(id));
   }, [isAuthenticated]);
-  console.log(auctionBidders, typeof auctionBidders);
-  console.log(auctionDetail, typeof auctionDetail);
+  // console.log(auctionBidders, typeof auctionBidders);
+  // console.log(auctionDetail, typeof auctionDetail);
   const isAuctionLive =
     Date.now() >= new Date(auctionDetail.startTime) &&
     Date.now() <= new Date(auctionDetail.endTime);
-  console.log(auctionDetail.description, typeof auctionDetail.description);
+  // console.log(auctionDetail.description, typeof auctionDetail.description);
   return (
     <div className="bg-gray-100 min-h-screen py-10 px-4 lg:px-20 mt-16">
       {loading ? (
