@@ -15,11 +15,7 @@ const Login = () => {
     const formData = new FormData();
     formData.append("email", email);
     formData.append("password", password);
-    const res = await dispatch(login(formData));
-    // only render new page if login is successful
-    if (res.payload?.success) {
-      naviagteTo("/");
-    }
+    dispatch(login(formData));
   };
 
   useEffect(() => {
