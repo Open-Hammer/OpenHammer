@@ -6,6 +6,6 @@ import { store } from "@/store/store.js";
 import { Provider } from "react-redux";
 createRoot(document.getElementById("root")).render(
   <Provider store={store}>
-    <App />
+    <App  />
   </Provider>
 );

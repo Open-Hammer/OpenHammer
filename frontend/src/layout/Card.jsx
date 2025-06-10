@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Card = ({ imgSrc, title, startingBid, startTime, endTime, id }) => {
   const calculateTimeLeft = () => {
@@ -44,11 +46,19 @@ const Card = ({ imgSrc, title, startingBid, startTime, endTime, id }) => {
       seconds
     )}sec`;
   };
-
+  const { isAuthenticated } = useSelector((state) => state.user);
+  const navigate = useNavigate();
+  const handleClick = () => {
+    if (!isAuthenticated) {
+      toast.error("Please Login First");
+    } else {
+      navigate(`/auction/item/${id}`);
+    }
+  };
   return (
-    <Link
-      to={`/auction/item/${id}`}
-      className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-2xl transform hover:-translate-y-1 transition duration-300"
+    <div
+      className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-2xl transform hover:-translate-y-1 transition duration-300 cursor-pointer"
+      onClick={handleClick}
     >
       <div className="relative h-48 overflow-hidden rounded-t-lg">
         <img
@@ -80,7 +90,7 @@ const Card = ({ imgSrc, title, startingBid, startTime, endTime, id }) => {
           <p className="text-sm text-gray-500 font-semibold">Auction ended</p>
         )}
       </div>
-    </Link>
+    </div>
   );
 };
 

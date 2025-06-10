@@ -4,7 +4,7 @@ import { catchAsyncErrors } from "../middlewares/catchAsyncErrors.js";
 import ErrorHandler from "../middlewares/error.js";
 import { v2 as cloudinary } from "cloudinary";
 import mongoose from "mongoose";
-
+import {Bid} from "../models/bidSchema.js"
 export const addNewAuctionItem = catchAsyncErrors(async (req, res, next) => {
   if (!req.files || Object.keys(req.files).length === 0) {
     return next(new ErrorHandler("Auction Item image required", 400));
@@ -13,11 +13,10 @@ export const addNewAuctionItem = catchAsyncErrors(async (req, res, next) => {
 
   const { image } = req.files;
 
-  const allowedFormats = ["image/png", "image/jpg", "image/webp"];
+  const allowedFormats = ["image/png", "image/webp", "image/jpeg"];
   if (!allowedFormats.includes(image.mimetype)) {
     return next(new ErrorHandler("File format not supported", 400));
   }
-
   const {
     title,
     description,
@@ -131,7 +130,7 @@ export const getAuctionDetails = catchAsyncErrors(async (req, res, next) => {
   if (!auctionItem) {
     return next(new ErrorHandler("Auction not found", 404));
   }
-  const bidders = auctionItem.bids.sort((a, b) => b.bid - a.bid);
+  const bidders = auctionItem.bids.sort((a, b) => b.amount - a.amount);
   res.status(200).json({
     success: true,
     auctionItem,
@@ -192,11 +191,14 @@ export const republishItem = catchAsyncErrors(async (req, res, next) => {
   }
   data.bids = [];
   data.commissionCalculated = false;
+  data.currentBid = 0;
+  data.highestBidder = null;
   auctionItem = await Auction.findByIdAndUpdate(id, data, {
     new: true,
     runValidators: true,
     useFindAndModify: false,
   });
+  await Bid.deleteMany({ auctionItem: auctionItem._id });
   // here run validators is false because on validating it again the password is stored in hashed format which is more than 8 characters so it will through an error
   const createdBy = await User.findByIdAndUpdate(
     req.user._id,

@@ -12,7 +12,10 @@ const ContactUs = () => {
     <div className="bg-white text-gray-800">
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-blue-700 to-blue-500 text-white py-24 px-6 text-center">
-        <h1 className="text-5xl font-bold mb-4">Contact OpenHammer</h1>
+        <h1 className="text-5xl font-bold mb-4">
+          Contact <span className="text-black">Open</span>
+          <span className="text-orange-400">Hammer</span>
+        </h1>
         <p className="text-xl max-w-3xl mx-auto">
           Have questions or need assistance? Here’s how to reach us. We’re
           committed to supporting your auction experience every step of the way.
