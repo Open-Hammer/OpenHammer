@@ -144,7 +144,7 @@ export const getAllPaymentProofs = () => async (dispatch) => {
     );
     dispatch(
       superAdminSlice.actions.successForPaymentProofs(
-        response.data.paymentProofs
+        response.data.PaymentProofs
       )
     );
   } catch (error) {
