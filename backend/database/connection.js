@@ -9,5 +9,7 @@ export const connection = () => {
     })
     .catch((err) => {
       console.log("some erro occured");
+      console.log(err);
+      console.log(err.message);
     });
 };

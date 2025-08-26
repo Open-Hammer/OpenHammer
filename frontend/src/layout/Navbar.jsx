@@ -24,7 +24,6 @@ const Navbar = () => {
   const handleLogout = () => {
     dispatch(logout());
   };
-
   return (
     <nav className="w-full fixed top-0 left-0 z-50 bg-white shadow-md border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-4 py-2 flex items-center justify-between">
