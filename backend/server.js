@@ -43,9 +43,9 @@ app.use(
 );
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use("/", (req, res) => {
-  res.send("Hi from server");
-});
+// app.use("/", (req, res) => {
+//   res.send("Hi from server");
+// });
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/auctionitem", auctionItemRouter);
 app.use("/api/v1/bid", bidRouter);
@@ -59,4 +59,6 @@ app.use(errorMiddleware);
 
 const PORT = process.env.PORT;
 
-app.listen(PORT, () => console.log(`SERVER STARTED AT PORT ${PORT}`));
+app.listen(PORT, () =>
+  console.log(`SERVER STARTED AT PORT http://localhost:${PORT}`)
+);

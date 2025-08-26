@@ -8,7 +8,7 @@ export const register = catchAsyncErrors(async (req, res, next) => {
   if (!req.files || Object.keys(req.files).length === 0) {
     return next(new ErrorHandler("Profile Image Required", 400));
   }
-  // console.log(req.body);
+  console.log(req.body);
 
   const { profileImage } = req.files;
   const allowedFormats = ["image/png", "image/jpg", "image/webp", "image/jpeg"];
@@ -28,6 +28,7 @@ export const register = catchAsyncErrors(async (req, res, next) => {
     razorpayAccountNumber,
     upiId,
   } = req.body;
+  // console.log(req.body);
   if (!userName || !email || !phone || !password || !address || !role) {
     return next(new ErrorHandler("Please fill form", 400));
   }
@@ -57,12 +58,11 @@ export const register = catchAsyncErrors(async (req, res, next) => {
     }
   );
   if (!cloudinaryResponse || cloudinaryResponse.error) {
-    console.log("sfdfdsf ");
+    // console.log("sfdfdsf ");
     console.error(
       "Cloudinary error:",
       cloudinaryResponse.error || "Unknown cloudinary error"
     );
-    s;
     return next(
       new ErrorHandler("Failed to upload profile image to cloudinary", 400)
     );
